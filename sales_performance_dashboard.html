@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Team Performance Dashboard - June 2025</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+            color: #1a1a1a;
+        }
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            font-weight: 300;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 18px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+        .stat-card h3 {
+            margin: 0 0 15px 0;
+            color: #34495e;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+        .employee-name {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .metric {
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .metric-label {
+            color: #7f8c8d;
+            font-size: 0.85em;
+        }
+        .metric-value {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.95em;
+        }
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            height: 350px;
+        }
+        .chart-container h2 {
+            margin: 0 0 15px 0;
+            color: #2c3e50;
+            font-size: 1.2em;
+            font-weight: 400;
+        }
+        .summary-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .summary-box h2 {
+            margin: 0 0 15px 0;
+            font-size: 1.5em;
+            font-weight: 300;
+        }
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .summary-stat {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .summary-stat-value {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        .summary-stat-label {
+            font-size: 0.85em;
+            opacity: 0.9;
+        }
+        .winner-badge {
+            background: #f39c12;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            display: inline-block;
+            margin-left: 8px;
+        }
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 768px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <h1>📊 Sales Team Performance Dashboard - June 2025</h1>
+        
+        <div class="summary-box">
+            <h2>Team Overview</h2>
+            <div class="summary-stats">
+                <div class="summary-stat">
+                    <div class="summary-stat-value">2,463</div>
+                    <div class="summary-stat-label">Total Connected Calls</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="summary-stat-value">76.3%</div>
+                    <div class="summary-stat-label">Team Connection Rate</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="summary-stat-value">49.5 hrs</div>
+                    <div class="summary-stat-label">Total Call Time</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="summary-stat-value">Joshua K.</div>
+                    <div class="summary-stat-label">Most Profitable</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="employee-name">Janis Schwarz <span class="winner-badge">2nd Most Profitable</span></div>
+                <div class="metric">
+                    <span class="metric-label">Total Calls Handled</span>
+                    <span class="metric-value">809</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Outbound Connected</span>
+                    <span class="metric-value">790</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Connection Rate</span>
+                    <span class="metric-value">76.6%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Call Time</span>
+                    <span class="metric-value">17h 30m</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Calls per Hour</span>
+                    <span class="metric-value">45.1</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Profitability Score</span>
+                    <span class="metric-value highlight">83.4/100</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="employee-name">Iris Wassermann</div>
+                <div class="metric">
+                    <span class="metric-label">Total Calls Handled</span>
+                    <span class="metric-value">445</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Outbound Connected</span>
+                    <span class="metric-value">426</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Connection Rate</span>
+                    <span class="metric-value">73.4%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Call Time</span>
+                    <span class="metric-value">13h 7m</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Calls per Hour</span>
+                    <span class="metric-value">32.5</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Profitability Score</span>
+                    <span class="metric-value highlight">59.6/100</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="employee-name">Robin Jennes <span class="winner-badge">3rd Most Profitable</span></div>
+                <div class="metric">
+                    <span class="metric-label">Total Calls Handled</span>
+                    <span class="metric-value">694</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Outbound Connected</span>
+                    <span class="metric-value">675</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Connection Rate</span>
+                    <span class="metric-value highlight">81.3%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Call Time</span>
+                    <span class="metric-value">12h 34m</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Calls per Hour</span>
+                    <span class="metric-value">53.7</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Profitability Score</span>
+                    <span class="metric-value highlight">82.2/100</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="employee-name">Joshua Kitowski <span class="winner-badge">🏆 Most Profitable</span></div>
+                <div class="metric">
+                    <span class="metric-label">Total Calls Handled</span>
+                    <span class="metric-value">577</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Outbound Connected</span>
+                    <span class="metric-value">572</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Connection Rate</span>
+                    <span class="metric-value">73.8%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Call Time</span>
+                    <span class="metric-value">6h 23m</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Calls per Hour</span>
+                    <span class="metric-value highlight">89.4</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Profitability Score</span>
+                    <span class="metric-value highlight">86.2/100</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-container">
+                <h2>Connected Outbound Calls by Employee</h2>
+                <canvas id="outboundChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>Connection Rate Comparison</h2>
+                <canvas id="connectionRateChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-container">
+                <h2>Weekly Performance Trends</h2>
+                <canvas id="weeklyTrendsChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>Profitability Score Breakdown</h2>
+                <canvas id="profitabilityChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2>Call Time Distribution</h2>
+            <canvas id="timeDistributionChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Chart.js default settings
+        Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        Chart.defaults.plugins.legend.position = 'bottom';
+        
+        // Color palette
+        const colors = {
+            primary: ['#667eea', '#764ba2', '#f093fb', '#4facfe'],
+            secondary: ['#a8edea', '#fed6e3', '#fccb90', '#d57eeb'],
+            success: '#48bb78',
+            warning: '#f6ad55',
+            danger: '#fc8181'
+        };
+
+        // Data
+        const employees = ['Janis Schwarz', 'Iris Wassermann', 'Robin Jennes', 'Joshua Kitowski'];
+        const connectedCalls = [790, 426, 675, 572];
+        const connectionRates = [76.6, 73.4, 81.3, 73.8];
+        const profitabilityScores = [83.4, 59.6, 82.2, 86.2];
+        const callTimes = [17.5, 13.1, 12.6, 6.4];
+
+        // Outbound Calls Chart
+        const outboundCtx = document.getElementById('outboundChart').getContext('2d');
+        new Chart(outboundCtx, {
+            type: 'bar',
+            data: {
+                labels: employees,
+                datasets: [{
+                    label: 'Connected Outbound Calls',
+                    data: connectedCalls,
+                    backgroundColor: colors.primary,
+                    borderColor: colors.primary,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { display: true, drawBorder: false }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Connection Rate Chart
+        const connectionRateCtx = document.getElementById('connectionRateChart').getContext('2d');
+        new Chart(connectionRateCtx, {
+            type: 'radar',
+            data: {
+                labels: employees,
+                datasets: [{
+                    label: 'Connection Rate %',
+                    data: connectionRates,
+                    backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                    borderColor: '#667eea',
+                    pointBackgroundColor: '#667eea',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#667eea'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        // Weekly Trends Chart
+        const weeklyTrendsCtx = document.getElementById('weeklyTrendsChart').getContext('2d');
+        new Chart(weeklyTrendsCtx, {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [
+                    {
+                        label: 'Janis Schwarz',
+                        data: [231, 194, 234, 131],
+                        borderColor: colors.primary[0],
+                        backgroundColor: colors.primary[0],
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Iris Wassermann',
+                        data: [122, 116, 140, 48],
+                        borderColor: colors.primary[1],
+                        backgroundColor: colors.primary[1],
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Robin Jennes',
+                        data: [212, 156, 213, 96],
+                        borderColor: colors.primary[2],
+                        backgroundColor: colors.primary[2],
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Joshua Kitowski',
+                        data: [205, 139, 158, 71],
+                        borderColor: colors.primary[3],
+                        backgroundColor: colors.primary[3],
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Connected Outbound Calls per Week'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { display: true, drawBorder: false }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Profitability Chart
+        const profitabilityCtx = document.getElementById('profitabilityChart').getContext('2d');
+        new Chart(profitabilityCtx, {
+            type: 'polarArea',
+            data: {
+                labels: employees,
+                datasets: [{
+                    label: 'Profitability Score',
+                    data: profitabilityScores,
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.7)',
+                        'rgba(118, 75, 162, 0.7)',
+                        'rgba(240, 147, 251, 0.7)',
+                        'rgba(79, 172, 254, 0.7)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        // Time Distribution Chart
+        const timeDistributionCtx = document.getElementById('timeDistributionChart').getContext('2d');
+        new Chart(timeDistributionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: employees,
+                datasets: [{
+                    label: 'Total Call Time (hours)',
+                    data: callTimes,
+                    backgroundColor: colors.primary
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Share of Total Team Call Time'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
