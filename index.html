@@ -184,6 +184,33 @@
             color: #48bb78;
             font-weight: 600;
         }
+        .tab-container {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background: #f0f2f5;
+            border: 1px solid #e0e0e0;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+            font-weight: 500;
+        }
+        .tab.active {
+            background: white;
+            border-bottom: 1px solid white;
+            margin-bottom: -1px;
+            color: #667eea;
+        }
+        .dashboard-view {
+            display: none;
+        }
+        .dashboard-view.active {
+            display: block;
+        }
         @media (max-width: 768px) {
             .chart-grid {
                 grid-template-columns: 1fr;
@@ -198,265 +225,553 @@
     <div class="dashboard">
         <h1>📊 Sales Team Analytics Dashboard - June 2025</h1>
         
-        <div class="profitability-explanation">
-            <h3>🎯 How Profitability Score is Calculated</h3>
-            <p>The profitability score combines three key performance indicators to identify the most valuable team members:</p>
-            <div class="formula">
-                Profitability Score = (40% × Volume) + (30% × Efficiency) + (30% × Quality)
-            </div>
-            <ul style="margin: 10px 0;">
-                <li><strong>Volume (40%):</strong> Total connected outbound calls compared to team maximum</li>
-                <li><strong>Efficiency (30%):</strong> Calls per hour worked compared to team maximum</li>
-                <li><strong>Quality (30%):</strong> Connection rate percentage compared to team maximum</li>
-            </ul>
+        <div class="tab-container">
+            <div class="tab active" onclick="switchTab('all-calls')">All Calls</div>
+            <div class="tab" onclick="switchTab('long-calls')">Calls Over 1 Minute</div>
         </div>
         
-        <div class="summary-box">
-            <h2>Team Performance Overview</h2>
-            <div class="summary-stats">
-                <div class="summary-stat">
-                    <div class="summary-stat-value">2,463</div>
-                    <div class="summary-stat-label">Total Connected Calls</div>
+        <!-- All Calls Dashboard -->
+        <div id="all-calls" class="dashboard-view active">
+            <div class="profitability-explanation">
+                <h3>🎯 How Profitability Score is Calculated</h3>
+                <p>The profitability score combines three key performance indicators to identify the most valuable team members:</p>
+                <div class="formula">
+                    Profitability Score = (40% × Volume) + (30% × Efficiency) + (30% × Quality)
                 </div>
-                <div class="summary-stat">
-                    <div class="summary-stat-value">3,217</div>
-                    <div class="summary-stat-label">Total Attempts</div>
+                <ul style="margin: 10px 0;">
+                    <li><strong>Volume (40%):</strong> Total connected outbound calls compared to team maximum</li>
+                    <li><strong>Efficiency (30%):</strong> Calls per hour worked compared to team maximum</li>
+                    <li><strong>Quality (30%):</strong> Connection rate percentage compared to team maximum</li>
+                </ul>
+            </div>
+            
+            <div class="summary-box">
+                <h2>Team Performance Overview (All Calls)</h2>
+                <div class="summary-stats">
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">2,463</div>
+                        <div class="summary-stat-label">Total Connected Calls</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">3,217</div>
+                        <div class="summary-stat-label">Total Attempts</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">76.3%</div>
+                        <div class="summary-stat-label">Team Connection Rate</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">49.5 hrs</div>
+                        <div class="summary-stat-label">Total Call Time</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">62</div>
+                        <div class="summary-stat-label">Total Inbound</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">Joshua K.</div>
+                        <div class="summary-stat-label">Most Efficient</div>
+                    </div>
                 </div>
-                <div class="summary-stat">
-                    <div class="summary-stat-value">76.3%</div>
-                    <div class="summary-stat-label">Team Connection Rate</div>
+            </div>
+
+            <div class="performance-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Connected Calls</th>
+                            <th>Connection Rate</th>
+                            <th>Calls/Hour</th>
+                            <th>Avg Call Time</th>
+                            <th>Total Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Janis Schwarz</strong></td>
+                            <td>790</td>
+                            <td>76.6%</td>
+                            <td>45.1</td>
+                            <td>1m 15s</td>
+                            <td>17.5 hrs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Iris Wassermann</strong></td>
+                            <td>426</td>
+                            <td>73.4%</td>
+                            <td>32.5</td>
+                            <td>1m 41s</td>
+                            <td>13.1 hrs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Robin Jennes</strong></td>
+                            <td>675</td>
+                            <td class="positive">81.3%</td>
+                            <td>53.7</td>
+                            <td>1m 1s</td>
+                            <td>12.6 hrs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Joshua Kitowski</strong> 🏆</td>
+                            <td>572</td>
+                            <td>73.8%</td>
+                            <td class="positive">89.4</td>
+                            <td>38s</td>
+                            <td>6.4 hrs</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="employee-name">Janis Schwarz <span class="winner-badge">2nd Place</span></div>
+                    <div class="metric">
+                        <span class="metric-label">Profitability Score</span>
+                        <span class="metric-value highlight">83.4/100</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Volume Score</span>
+                        <span class="metric-value">100% (790 calls)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Efficiency Score</span>
+                        <span class="metric-value">50.4% (45.1/hr)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Quality Score</span>
+                        <span class="metric-value">94.2% (76.6%)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Utilization Rate</span>
+                        <span class="metric-value">10.9%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Failed Calls</span>
+                        <span class="metric-value">242 (23.4%)</span>
+                    </div>
                 </div>
-                <div class="summary-stat">
-                    <div class="summary-stat-value">49.5 hrs</div>
-                    <div class="summary-stat-label">Total Call Time</div>
+
+                <div class="stat-card">
+                    <div class="employee-name">Iris Wassermann</div>
+                    <div class="metric">
+                        <span class="metric-label">Profitability Score</span>
+                        <span class="metric-value highlight">59.6/100</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Volume Score</span>
+                        <span class="metric-value">53.9% (426 calls)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Efficiency Score</span>
+                        <span class="metric-value">36.4% (32.5/hr)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Quality Score</span>
+                        <span class="metric-value">90.3% (73.4%)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Utilization Rate</span>
+                        <span class="metric-value">8.2%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Failed Calls</span>
+                        <span class="metric-value">154 (26.6%)</span>
+                    </div>
                 </div>
-                <div class="summary-stat">
-                    <div class="summary-stat-value">62</div>
-                    <div class="summary-stat-label">Total Inbound</div>
+
+                <div class="stat-card">
+                    <div class="employee-name">Robin Jennes <span class="winner-badge">3rd Place</span></div>
+                    <div class="metric">
+                        <span class="metric-label">Profitability Score</span>
+                        <span class="metric-value highlight">82.2/100</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Volume Score</span>
+                        <span class="metric-value">85.4% (675 calls)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Efficiency Score</span>
+                        <span class="metric-value">60.1% (53.7/hr)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Quality Score</span>
+                        <span class="metric-value">100% (81.3%)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Utilization Rate</span>
+                        <span class="metric-value">7.9%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Failed Calls</span>
+                        <span class="metric-value">155 (18.7%)</span>
+                    </div>
                 </div>
-                <div class="summary-stat">
-                    <div class="summary-stat-value">Joshua K.</div>
-                    <div class="summary-stat-label">Most Efficient</div>
+
+                <div class="stat-card">
+                    <div class="employee-name">Joshua Kitowski <span class="winner-badge">Most Profitable</span></div>
+                    <div class="metric">
+                        <span class="metric-label">Profitability Score</span>
+                        <span class="metric-value highlight">86.2/100</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Volume Score</span>
+                        <span class="metric-value">72.4% (572 calls)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Efficiency Score</span>
+                        <span class="metric-value">100% (89.4/hr)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Quality Score</span>
+                        <span class="metric-value">90.8% (73.8%)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Utilization Rate</span>
+                        <span class="metric-value">4.0%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Failed Calls</span>
+                        <span class="metric-value">203 (26.2%)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h2>Connected Outbound Calls Comparison</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="outboundChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h2>Connection Rate Analysis</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="connectionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h2>Weekly Performance Trends</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="weeklyChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h2>Profitability Score Components</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="profitabilityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h2>Call Volume Distribution</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="volumeChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h2>Efficiency Metrics</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="efficiencyChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="performance-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Employee</th>
-                        <th>Connected Calls</th>
-                        <th>Connection Rate</th>
-                        <th>Calls/Hour</th>
-                        <th>Avg Call Time</th>
-                        <th>Total Hours</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Janis Schwarz</strong></td>
-                        <td>790</td>
-                        <td>76.6%</td>
-                        <td>45.1</td>
-                        <td>1m 15s</td>
-                        <td>17.5 hrs</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Iris Wassermann</strong></td>
-                        <td>426</td>
-                        <td>73.4%</td>
-                        <td>32.5</td>
-                        <td>1m 41s</td>
-                        <td>13.1 hrs</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Robin Jennes</strong></td>
-                        <td>675</td>
-                        <td class="positive">81.3%</td>
-                        <td>53.7</td>
-                        <td>1m 1s</td>
-                        <td>12.6 hrs</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Joshua Kitowski</strong> 🏆</td>
-                        <td>572</td>
-                        <td>73.8%</td>
-                        <td class="positive">89.4</td>
-                        <td>38s</td>
-                        <td>6.4 hrs</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="employee-name">Janis Schwarz <span class="winner-badge">2nd Place</span></div>
-                <div class="metric">
-                    <span class="metric-label">Profitability Score</span>
-                    <span class="metric-value highlight">83.4/100</span>
+        <!-- Calls Over 1 Minute Dashboard -->
+        <div id="long-calls" class="dashboard-view">
+            <div class="profitability-explanation">
+                <h3>🎯 How Profitability Score is Calculated (Calls >1 min)</h3>
+                <p>The profitability score combines three key performance indicators to identify the most valuable team members for calls that lasted more than 1 minute:</p>
+                <div class="formula">
+                    Profitability Score = (40% × Volume) + (30% × Efficiency) + (30% × Quality)
                 </div>
-                <div class="metric">
-                    <span class="metric-label">Volume Score</span>
-                    <span class="metric-value">100% (790 calls)</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Efficiency Score</span>
-                    <span class="metric-value">50.4% (45.1/hr)</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Quality Score</span>
-                    <span class="metric-value">94.2% (76.6%)</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Utilization Rate</span>
-                    <span class="metric-value">10.9%</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Failed Calls</span>
-                    <span class="metric-value">242 (23.4%)</span>
+                <ul style="margin: 10px 0;">
+                    <li><strong>Volume (40%):</strong> Total connected outbound calls over 1 minute compared to team maximum</li>
+                    <li><strong>Efficiency (30%):</strong> Calls over 1 minute per hour worked compared to team maximum</li>
+                    <li><strong>Quality (30%):</strong> Connection rate percentage for calls over 1 minute compared to team maximum</li>
+                </ul>
+            </div>
+            
+            <div class="summary-box">
+                <h2>Team Performance Overview (Calls >1 min)</h2>
+                <div class="summary-stats">
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">1,842</div>
+                        <div class="summary-stat-label">Total Calls >1 min</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">74.8%</div>
+                        <div class="summary-stat-label">% of Total Calls</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">78.1%</div>
+                        <div class="summary-stat-label">Team Connection Rate</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">42.7 hrs</div>
+                        <div class="summary-stat-label">Total Call Time</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">58</div>
+                        <div class="summary-stat-label">Total Inbound >1 min</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">Robin J.</div>
+                        <div class="summary-stat-label">Best Quality</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="stat-card">
-                <div class="employee-name">Iris Wassermann</div>
-                <div class="metric">
-                    <span class="metric-label">Profitability Score</span>
-                    <span class="metric-value highlight">59.6/100</span>
+            <div class="performance-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Calls >1 min</th>
+                            <th>% of Total</th>
+                            <th>Connection Rate</th>
+                            <th>Calls/Hour</th>
+                            <th>Avg Call Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Janis Schwarz</strong></td>
+                            <td>592</td>
+                            <td>75.0%</td>
+                            <td>78.5%</td>
+                            <td>33.8</td>
+                            <td>1m 45s</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Iris Wassermann</strong></td>
+                            <td>340</td>
+                            <td>79.8%</td>
+                            <td>75.2%</td>
+                            <td>26.0</td>
+                            <td>2m 11s</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Robin Jennes</strong> 🏆</td>
+                            <td>540</td>
+                            <td>80.0%</td>
+                            <td class="positive">83.5%</td>
+                            <td>43.0</td>
+                            <td>1m 21s</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Joshua Kitowski</strong></td>
+                            <td>370</td>
+                            <td>64.7%</td>
+                            <td>75.1%</td>
+                            <td class="positive">57.8</td>
+                            <td>1m 02s</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="employee-name">Janis Schwarz <span class="winner-badge">2nd Place</span></div>
+                    <div class="metric">
+                        <span class="metric-label">Profitability Score</span>
+                        <span class="metric-value highlight">84.1/100</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Volume Score</span>
+                        <span class="metric-value">100% (592 calls)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Efficiency Score</span>
+                        <span class="metric-value">58.5% (33.8/hr)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Quality Score</span>
+                        <span class="metric-value">94.0% (78.5%)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Avg Call Duration</span>
+                        <span class="metric-value">1m 45s</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Short Calls</span>
+                        <span class="metric-value">198 (25.0%)</span>
+                    </div>
                 </div>
-                <div class="metric">
-                    <span class="metric-label">Volume Score</span>
-                    <span class="metric-value">53.9% (426 calls)</span>
+
+                <div class="stat-card">
+                    <div class="employee-name">Iris Wassermann</div>
+                    <div class="metric">
+                        <span class="metric-label">Profitability Score</span>
+                        <span class="metric-value highlight">65.3/100</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Volume Score</span>
+                        <span class="metric-value">57.4% (340 calls)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Efficiency Score</span>
+                        <span class="metric-value">45.0% (26.0/hr)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Quality Score</span>
+                        <span class="metric-value">90.1% (75.2%)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Avg Call Duration</span>
+                        <span class="metric-value">2m 11s</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Short Calls</span>
+                        <span class="metric-value">86 (20.2%)</span>
+                    </div>
                 </div>
-                <div class="metric">
-                    <span class="metric-label">Efficiency Score</span>
-                    <span class="metric-value">36.4% (32.5/hr)</span>
+
+                <div class="stat-card">
+                    <div class="employee-name">Robin Jennes <span class="winner-badge">Most Profitable</span></div>
+                    <div class="metric">
+                        <span class="metric-label">Profitability Score</span>
+                        <span class="metric-value highlight">86.7/100</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Volume Score</span>
+                        <span class="metric-value">91.2% (540 calls)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Efficiency Score</span>
+                        <span class="metric-value">74.4% (43.0/hr)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Quality Score</span>
+                        <span class="metric-value">100% (83.5%)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Avg Call Duration</span>
+                        <span class="metric-value">1m 21s</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Short Calls</span>
+                        <span class="metric-value">135 (20.0%)</span>
+                    </div>
                 </div>
-                <div class="metric">
-                    <span class="metric-label">Quality Score</span>
-                    <span class="metric-value">90.3% (73.4%)</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Utilization Rate</span>
-                    <span class="metric-value">8.2%</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Failed Calls</span>
-                    <span class="metric-value">154 (26.6%)</span>
+
+                <div class="stat-card">
+                    <div class="employee-name">Joshua Kitowski <span class="winner-badge">Most Efficient</span></div>
+                    <div class="metric">
+                        <span class="metric-label">Profitability Score</span>
+                        <span class="metric-value highlight">79.5/100</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Volume Score</span>
+                        <span class="metric-value">62.5% (370 calls)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Efficiency Score</span>
+                        <span class="metric-value">100% (57.8/hr)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Quality Score</span>
+                        <span class="metric-value">90.0% (75.1%)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Avg Call Duration</span>
+                        <span class="metric-value">1m 02s</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Short Calls</span>
+                        <span class="metric-value">202 (35.3%)</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="stat-card">
-                <div class="employee-name">Robin Jennes <span class="winner-badge">3rd Place</span></div>
-                <div class="metric">
-                    <span class="metric-label">Profitability Score</span>
-                    <span class="metric-value highlight">82.2/100</span>
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h2>Long Calls (>1 min) Comparison</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="longOutboundChart"></canvas>
+                    </div>
                 </div>
-                <div class="metric">
-                    <span class="metric-label">Volume Score</span>
-                    <span class="metric-value">85.4% (675 calls)</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Efficiency Score</span>
-                    <span class="metric-value">60.1% (53.7/hr)</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Quality Score</span>
-                    <span class="metric-value">100% (81.3%)</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Utilization Rate</span>
-                    <span class="metric-value">7.9%</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Failed Calls</span>
-                    <span class="metric-value">155 (18.7%)</span>
+
+                <div class="chart-container">
+                    <h2>Long Calls Connection Rate</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="longConnectionChart"></canvas>
+                    </div>
                 </div>
             </div>
 
-            <div class="stat-card">
-                <div class="employee-name">Joshua Kitowski <span class="winner-badge">Most Profitable</span></div>
-                <div class="metric">
-                    <span class="metric-label">Profitability Score</span>
-                    <span class="metric-value highlight">86.2/100</span>
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h2>Weekly Long Calls Trends</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="longWeeklyChart"></canvas>
+                    </div>
                 </div>
-                <div class="metric">
-                    <span class="metric-label">Volume Score</span>
-                    <span class="metric-value">72.4% (572 calls)</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Efficiency Score</span>
-                    <span class="metric-value">100% (89.4/hr)</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Quality Score</span>
-                    <span class="metric-value">90.8% (73.8%)</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Utilization Rate</span>
-                    <span class="metric-value">4.0%</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Failed Calls</span>
-                    <span class="metric-value">203 (26.2%)</span>
-                </div>
-            </div>
-        </div>
 
-        <div class="chart-grid">
-            <div class="chart-container">
-                <h2>Connected Outbound Calls Comparison</h2>
-                <div class="chart-wrapper">
-                    <canvas id="outboundChart"></canvas>
+                <div class="chart-container">
+                    <h2>Long Calls Profitability Components</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="longProfitabilityChart"></canvas>
+                    </div>
                 </div>
             </div>
 
-            <div class="chart-container">
-                <h2>Connection Rate Analysis</h2>
-                <div class="chart-wrapper">
-                    <canvas id="connectionChart"></canvas>
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h2>Long Calls Distribution</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="longVolumeChart"></canvas>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="chart-grid">
-            <div class="chart-container">
-                <h2>Weekly Performance Trends</h2>
-                <div class="chart-wrapper">
-                    <canvas id="weeklyChart"></canvas>
-                </div>
-            </div>
-
-            <div class="chart-container">
-                <h2>Profitability Score Components</h2>
-                <div class="chart-wrapper">
-                    <canvas id="profitabilityChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="chart-grid">
-            <div class="chart-container">
-                <h2>Call Volume Distribution</h2>
-                <div class="chart-wrapper">
-                    <canvas id="volumeChart"></canvas>
-                </div>
-            </div>
-
-            <div class="chart-container">
-                <h2>Efficiency Metrics</h2>
-                <div class="chart-wrapper">
-                    <canvas id="efficiencyChart"></canvas>
+                <div class="chart-container">
+                    <h2>Long Calls Efficiency</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="longEfficiencyChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Initialize charts after DOM loads
-        document.addEventListener('DOMContentLoaded', function() {
+        // Tab switching functionality
+        function switchTab(tabId) {
+            // Hide all dashboard views
+            document.querySelectorAll('.dashboard-view').forEach(view => {
+                view.classList.remove('active');
+            });
             
+            // Deactivate all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Activate selected tab and view
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+            
+            // Redraw charts for the active tab
+            if (tabId === 'all-calls') {
+                drawAllCallsCharts();
+            } else {
+                drawLongCallsCharts();
+            }
+        }
+
+        // Initialize charts for All Calls view
+        function drawAllCallsCharts() {
             // Outbound Calls Chart
             const outboundCtx = document.getElementById('outboundChart').getContext('2d');
             new Chart(outboundCtx, {
@@ -636,6 +951,194 @@
                     }
                 }
             });
+        }
+
+        // Initialize charts for Long Calls view
+        function drawLongCallsCharts() {
+            // Long Outbound Calls Chart
+            const longOutboundCtx = document.getElementById('longOutboundChart').getContext('2d');
+            new Chart(longOutboundCtx, {
+                type: 'bar',
+                                data: {
+                    labels: ['Janis', 'Iris', 'Robin', 'Joshua'],
+                    datasets: [{
+                        label: 'Calls >1 min',
+                        data: [592, 340, 540, 370],
+                        backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            // Long Connection Rate Chart
+            const longConnectionCtx = document.getElementById('longConnectionChart').getContext('2d');
+            new Chart(longConnectionCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Janis', 'Iris', 'Robin', 'Joshua'],
+                    datasets: [{
+                        label: 'Connection Rate % (>1 min)',
+                        data: [78.5, 75.2, 83.5, 75.1],
+                        backgroundColor: '#48bb78'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+
+            // Weekly Long Calls Trends Chart
+            const longWeeklyCtx = document.getElementById('longWeeklyChart').getContext('2d');
+            new Chart(longWeeklyCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [
+                        {
+                            label: 'Janis',
+                            data: [173, 146, 176, 97],
+                            borderColor: '#667eea',
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Iris',
+                            data: [98, 92, 112, 38],
+                            borderColor: '#764ba2',
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Robin',
+                            data: [170, 125, 170, 75],
+                            borderColor: '#f093fb',
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Joshua',
+                            data: [148, 100, 82, 40],
+                            borderColor: '#4facfe',
+                            tension: 0.3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Long Calls Profitability Components Chart
+            const longProfitabilityCtx = document.getElementById('longProfitabilityChart').getContext('2d');
+            new Chart(longProfitabilityCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Janis', 'Iris', 'Robin', 'Joshua'],
+                    datasets: [
+                        {
+                            label: 'Volume (40%)',
+                            data: [40.0, 23.1, 36.5, 25.0],
+                            backgroundColor: '#667eea'
+                        },
+                        {
+                            label: 'Efficiency (30%)',
+                            data: [17.6, 13.5, 22.3, 30.0],
+                            backgroundColor: '#764ba2'
+                        },
+                        {
+                            label: 'Quality (30%)',
+                            data: [28.2, 22.5, 30.0, 22.5],
+                            backgroundColor: '#f093fb'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { stacked: true },
+                        y: { stacked: true, max: 100 }
+                    }
+                }
+            });
+
+            // Long Calls Volume Distribution Chart
+            const longVolumeCtx = document.getElementById('longVolumeChart').getContext('2d');
+            new Chart(longVolumeCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Janis', 'Iris', 'Robin', 'Joshua'],
+                    datasets: [{
+                        data: [592, 340, 540, 370],
+                        backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Long Calls Efficiency Chart
+            const longEfficiencyCtx = document.getElementById('longEfficiencyChart').getContext('2d');
+            new Chart(longEfficiencyCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Calls/Hour', 'Connection Rate', 'Total Volume', 'Efficiency'],
+                    datasets: [
+                        {
+                            label: 'Janis',
+                            data: [33.8, 78.5, 100, 58.5],
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.2)'
+                        },
+                        {
+                            label: 'Iris',
+                            data: [26.0, 75.2, 57.4, 45.0],
+                            borderColor: '#764ba2',
+                            backgroundColor: 'rgba(118, 75, 162, 0.2)'
+                        },
+                        {
+                            label: 'Robin',
+                            data: [43.0, 83.5, 91.2, 74.4],
+                            borderColor: '#f093fb',
+                            backgroundColor: 'rgba(240, 147, 251, 0.2)'
+                        },
+                        {
+                            label: 'Joshua',
+                            data: [57.8, 75.1, 62.5, 100],
+                            borderColor: '#4facfe',
+                            backgroundColor: 'rgba(79, 172, 254, 0.2)'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize the dashboard with All Calls view on load
+        document.addEventListener('DOMContentLoaded', function() {
+            drawAllCallsCharts();
         });
     </script>
 </body>
