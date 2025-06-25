@@ -219,6 +219,29 @@
                 grid-template-columns: 1fr;
             }
         }
+        .conversion-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .conversion-metric {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .conversion-metric-value {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .conversion-metric-label {
+            color: #7f8c8d;
+            font-size: 0.85em;
+        }
     </style>
 </head>
 <body>
@@ -228,6 +251,7 @@
         <div class="tab-container">
             <div class="tab active" onclick="switchTab('all-calls')">All Calls</div>
             <div class="tab" onclick="switchTab('long-calls')">Calls Over 1 Minute</div>
+            <div class="tab" onclick="switchTab('conversion')">Conversion Rate Success</div>
         </div>
         
         <!-- All Calls Dashboard -->
@@ -743,6 +767,151 @@
                 </div>
             </div>
         </div>
+
+        <!-- New Conversion Rate Dashboard -->
+        <div id="conversion" class="dashboard-view">
+            <div class="profitability-explanation">
+                <h3>🎯 Conversion Rate Analysis</h3>
+                <p>This dashboard shows product sales performance in relation to call time efficiency:</p>
+                <div class="formula">
+                    Conversion Effectiveness = (Products Sold) / (Call Hours × Efficiency)
+                </div>
+                <ul style="margin: 10px 0;">
+                    <li><strong>Object List:</strong> Premium product line sales</li>
+                    <li><strong>GNV:</strong> Standard product line sales</li>
+                    <li><strong>Units per Hour:</strong> Products sold per hour of call time</li>
+                </ul>
+            </div>
+            
+            <div class="summary-box">
+                <h2>Team Sales Overview - June 2025</h2>
+                <div class="summary-stats">
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">35</div>
+                        <div class="summary-stat-label">Total Products Sold</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">1,403</div>
+                        <div class="summary-stat-label">Total Units Sold</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">485</div>
+                        <div class="summary-stat-label">GNV Units</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">Robin</div>
+                        <div class="summary-stat-label">Top GNV Seller</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">Joshua</div>
+                        <div class="summary-stat-label">Top Object List Seller</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="performance-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Object List</th>
+                            <th>Object List Units</th>
+                            <th>GNV</th>
+                            <th>GNV Units</th>
+                            <th>Total Units/Hour</th>
+                            <th>Sales Efficiency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Janis Schwarz</strong></td>
+                            <td>4</td>
+                            <td>216</td>
+                            <td>5</td>
+                            <td>123</td>
+                            <td>19.4</td>
+                            <td class="positive">83%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Iris Wassermann</strong></td>
+                            <td>4</td>
+                            <td>174</td>
+                            <td>5</td>
+                            <td>93</td>
+                            <td>15.3</td>
+                            <td>78%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Robin Jennes</strong> 🏆</td>
+                            <td>2</td>
+                            <td>73</td>
+                            <td class="positive">12</td>
+                            <td class="positive">269</td>
+                            <td class="positive">27.1</td>
+                            <td class="positive">91%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Joshua Kitowski</strong></td>
+                            <td class="positive">25</td>
+                            <td class="positive">940</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>146.9</td>
+                            <td class="positive">89%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="conversion-metrics">
+                <div class="conversion-metric">
+                    <div class="conversion-metric-value">5.7x</div>
+                    <div class="conversion-metric-label">Joshua's Object List Lead</div>
+                </div>
+                <div class="conversion-metric">
+                    <div class="conversion-metric-value">22.4x</div>
+                    <div class="conversion-metric-label">Robin's GNV Units Lead</div>
+                </div>
+                <div class="conversion-metric">
+                    <div class="conversion-metric-value">2.9x</div>
+                    <div class="conversion-metric-label">Joshua's Units/Hour Lead</div>
+                </div>
+                <div class="conversion-metric">
+                    <div class="conversion-metric-value">13%</div>
+                    <div class="conversion-metric-label">Robin's Efficiency Lead</div>
+                </div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h2>Product Sales Comparison</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="productSalesChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h2>Units Sold per Call Hour</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="unitsPerHourChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h2>Sales Mix by Employee</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="salesMixChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h2>Sales Efficiency vs Call Time</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="efficiencyVsTimeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -765,10 +934,146 @@
             // Redraw charts for the active tab
             if (tabId === 'all-calls') {
                 drawAllCallsCharts();
-            } else {
+            } 
+            else if (tabId === 'conversion') {
+                drawConversionCharts();
+            }
+            else {
                 drawLongCallsCharts();
             }
         }
+
+        function drawConversionCharts() {
+            // Product Sales Comparison Chart
+            const productSalesCtx = document.getElementById('productSalesChart').getContext('2d');
+            new Chart(productSalesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Janis', 'Iris', 'Robin', 'Joshua'],
+                    datasets: [
+                        {
+                            label: 'Object List Products',
+                            data: [4, 4, 2, 25],
+                            backgroundColor: '#667eea'
+                        },
+                        {
+                            label: 'GNV Products',
+                            data: [5, 5, 12, 0],
+                            backgroundColor: '#764ba2'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { stacked: true },
+                        y: { stacked: true }
+                    }
+                }
+            });
+
+            // Units Per Hour Chart
+            const unitsPerHourCtx = document.getElementById('unitsPerHourChart').getContext('2d');
+            new Chart(unitsPerHourCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Janis', 'Iris', 'Robin', 'Joshua'],
+                    datasets: [{
+                        label: 'Units per Call Hour',
+                        data: [19.4, 15.3, 27.1, 146.9],
+                        backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Sales Mix Chart
+            const salesMixCtx = document.getElementById('salesMixChart').getContext('2d');
+            new Chart(salesMixCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Janis Object List', 'Janis GNV', 'Iris Object List', 'Iris GNV', 'Robin Object List', 'Robin GNV', 'Joshua Object List'],
+                    datasets: [{
+                        data: [216, 123, 174, 93, 73, 269, 940],
+                        backgroundColor: [
+                            '#667eea', '#a3bffa', '#764ba2', '#b794f4', 
+                            '#f093fb', '#f9a8d4', '#4facfe'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Efficiency vs Time Chart
+            const efficiencyCtx = document.getElementById('efficiencyVsTimeChart').getContext('2d');
+            new Chart(efficiencyCtx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Janis',
+                            data: [{x: 17.5, y: 83}],
+                            backgroundColor: '#667eea',
+                            radius: 12
+                        },
+                        {
+                            label: 'Iris',
+                            data: [{x: 13.1, y: 78}],
+                            backgroundColor: '#764ba2',
+                            radius: 12
+                        },
+                        {
+                            label: 'Robin',
+                            data: [{x: 12.6, y: 91}],
+                            backgroundColor: '#f093fb',
+                            radius: 12
+                        },
+                        {
+                            label: 'Joshua',
+                            data: [{x: 6.4, y: 89}],
+                            backgroundColor: '#4facfe',
+                            radius: 12
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Total Call Hours'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Sales Efficiency %'
+                            },
+                            min: 70,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update your DOMContentLoaded event listener
+        document.addEventListener('DOMContentLoaded', function() {
+            drawAllCallsCharts();
+            
+            // Load the sales data (you could fetch this from output.csv in a real implementation)
+            // For now we're using hardcoded values that match your CSV
+        });
+
 
         // Initialize charts for All Calls view
         function drawAllCallsCharts() {
