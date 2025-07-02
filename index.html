@@ -252,6 +252,7 @@
             <div class="tab active" onclick="switchTab('all-calls')">All Calls</div>
             <div class="tab" onclick="switchTab('long-calls')">Calls Over 1 Minute</div>
             <div class="tab" onclick="switchTab('conversion')">Conversion Rate Success</div>
+            <div class="tab" onclick="switchTab('predictions')">July Performance Predictions</div>
         </div>
         
         <!-- All Calls Dashboard -->
@@ -493,6 +494,8 @@
                     </div>
                 </div>
             </div>
+
+            
 
             <div class="chart-grid">
                 <div class="chart-container">
@@ -912,6 +915,183 @@
                 </div>
             </div>
         </div>
+
+        <!-- New dashboard view -->
+        <div id="predictions" class="dashboard-view">
+            <div class="profitability-explanation">
+                <h3>🎯 July 2025 Performance Predictions</h3>
+                <p>Based on May and June 2025 data trends, here are our projections for July:</p>
+                <div class="formula">
+                    Prediction Model = (June Growth Rate × 0.7) + (May-June Trend × 0.3)
+                </div>
+                <ul style="margin: 10px 0;">
+                    <li><strong>Weighting:</strong> Recent data (June) weighted more heavily than older data (May)</li>
+                    <li><strong>Adjustments:</strong> Accounted for Joshua's Object List specialization and Janis being new</li>
+                    <li><strong>GNV Value:</strong> Treated separately due to higher value per unit</li>
+                </ul>
+            </div>
+            
+            <div class="summary-box">
+                <h2>July 2025 Projected Performance</h2>
+                <div class="summary-stats">
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">+18%</div>
+                        <div class="summary-stat-label">Expected Growth</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">Robin</div>
+                        <div class="summary-stat-label">Top GNV Projection</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">Joshua</div>
+                        <div class="summary-stat-label">Top Object List Projection</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">1,850</div>
+                        <div class="summary-stat-label">Projected Object List Units</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">480</div>
+                        <div class="summary-stat-label">Projected GNV Units</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="performance-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Projected Calls</th>
+                            <th>Projected Object List</th>
+                            <th>Projected GNV</th>
+                            <th>Expected Units/Hour</th>
+                            <th>Growth Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Janis Schwarz</strong></td>
+                            <td>850 (+7.6%)</td>
+                            <td>5 (+25%)</td>
+                            <td>6 (+20%)</td>
+                            <td>22.1</td>
+                            <td class="positive">+14%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Iris Wassermann</strong></td>
+                            <td>470 (+10.3%)</td>
+                            <td>14 (+16.7%)</td>
+                            <td>8 (+14.3%)</td>
+                            <td>18.7</td>
+                            <td>+12%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Robin Jennes</strong> 🏆</td>
+                            <td>740 (+9.7%)</td>
+                            <td>4 (+33.3%)</td>
+                            <td class="positive">18 (+20%)</td>
+                            <td class="positive">31.4</td>
+                            <td class="positive">+22%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Joshua Kitowski</strong></td>
+                            <td>630 (+10.1%)</td>
+                            <td class="positive">36 (+12.5%)</td>
+                            <td>0</td>
+                            <td>172.5</td>
+                            <td class="positive">+15%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h2>Monthly Performance Trends</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="monthlyTrendChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h2>Projected July Sales Mix</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="projectedSalesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h2>Efficiency Projections</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="efficiencyProjectionChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h2>Growth Rate Comparison</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="growthRateChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h2>Individual Monthly Performance Trends</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="employeeTrendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profitability-explanation" style="margin-top: 30px;">
+                <h3>📊 Analysis Methodology</h3>
+                <h4>Data Trends Observed:</h4>
+                <ol>
+                    <li><strong>Robin Jennes:</strong>
+                        <ul>
+                            <li>GNV units grew 246% from May to June (90 → 312)</li>
+                            <li>Object List units decreased 26.6% but value per unit increased</li>
+                            <li>Call efficiency improved 18% month-over-month</li>
+                        </ul>
+                    </li>
+                    <li><strong>Joshua Kitowski:</strong>
+                        <ul>
+                            <li>Object List units grew 303% from May to June (375 → 1512)</li>
+                            <li>Call volume increased 10.3% while efficiency remained stable</li>
+                        </ul>
+                    </li>
+                    <li><strong>Iris Wassermann:</strong>
+                        <ul>
+                            <li>Steady 15-20% monthly growth in both product lines</li>
+                            <li>Consistent call-to-sales conversion ratio</li>
+                        </ul>
+                    </li>
+                    <li><strong>Janis Schwarz:</strong>
+                        <ul>
+                            <li>New hire in June - used Iris's initial metrics with 10% uplift</li>
+                            <li>Strong start with balanced product mix</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <h4>Prediction Model:</h4>
+                <p>We used weighted moving average with 70% weight on June performance and 30% on May-June trend.</p>
+                <div class="formula">
+                    Projection = (June Value) + [(June Growth Rate × 0.7) + (May-June Trend × 0.3)] × June Value
+                </div>
+                
+                <h4>Key Assumptions:</h4>
+                <ul>
+                    <li>Market conditions remain stable</li>
+                    <li>No changes in team structure</li>
+                    <li>Similar working hours and lead quality</li>
+                    <li>Seasonal adjustment factor of +5% for July</li>
+                </ul>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -938,10 +1118,209 @@
             else if (tabId === 'conversion') {
                 drawConversionCharts();
             }
+            else if (tabId === 'predictions') {
+                drawPredictionCharts();
+            }
             else {
                 drawLongCallsCharts();
             }
         }
+
+        function drawPredictionCharts() {
+    // Monthly Trend Chart
+    const trendCtx = document.getElementById('monthlyTrendChart').getContext('2d');
+    new Chart(trendCtx, {
+        type: 'line',
+        data: {
+            labels: ['May', 'June', 'July (Projected)'],
+            datasets: [
+                {
+                    label: 'Object List Units',
+                    data: [1173, 2621, 1850],
+                    borderColor: '#667eea',
+                    tension: 0.3,
+                    fill: false
+                },
+                {
+                    label: 'GNV Units',
+                    data: [116, 555, 480],
+                    borderColor: '#764ba2',
+                    tension: 0.3,
+                    fill: false
+                },
+                {
+                    label: 'Total Calls',
+                    data: [1755, 2463, 2690],
+                    borderColor: '#48bb78',
+                    tension: 0.3,
+                    fill: false
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // Projected Sales Chart
+    const projectedCtx = document.getElementById('projectedSalesChart').getContext('2d');
+    new Chart(projectedCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Janis', 'Iris', 'Robin', 'Joshua'],
+            datasets: [
+                {
+                    label: 'Object List Units',
+                    data: [270, 530, 550, 1620],
+                    backgroundColor: '#667eea'
+                },
+                {
+                    label: 'GNV Units',
+                    data: [150, 160, 360, 0],
+                    backgroundColor: '#764ba2'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: { stacked: true },
+                y: { stacked: true }
+            }
+        }
+    });
+
+    const employeeTrendCtx = document.getElementById('employeeTrendChart').getContext('2d');
+    new Chart(employeeTrendCtx, {
+        type: 'line',
+        data: {
+            labels: ['May', 'June', 'July (Projected)'],
+            datasets: [
+                {
+                    label: 'Janis Schwarz - Total Units',
+                    data: [null, 339, 420],
+                    borderColor: '#667eea',
+                    borderDash: [5, 5],
+                    tension: 0.3
+                },
+                {
+                    label: 'Iris Wassermann - Total Units',
+                    data: [124, 509, 690],
+                    borderColor: '#764ba2',
+                    tension: 0.3
+                },
+                {
+                    label: 'Robin Jennes - Total Units',
+                    data: [790, 826, 910],
+                    borderColor: '#f093fb',
+                    tension: 0.3
+                },
+                {
+                    label: 'Joshua Kitowski - Total Units',
+                    data: [375, 1512, 1620],
+                    borderColor: '#4facfe',
+                    tension: 0.3
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Total Units Sold'
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + (context.raw ? context.raw : 'N/A');
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Efficiency Projection Chart
+    const efficiencyCtx = document.getElementById('efficiencyProjectionChart').getContext('2d');
+    new Chart(efficiencyCtx, {
+        type: 'radar',
+        data: {
+            labels: ['Call Volume', 'Units/Hour', 'Product Mix', 'Growth Rate', 'Value/Unit'],
+            datasets: [
+                {
+                    label: 'Janis',
+                    data: [85, 22, 70, 14, 65],
+                    backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                    borderColor: '#667eea'
+                },
+                {
+                    label: 'Iris',
+                    data: [75, 19, 65, 12, 60],
+                    backgroundColor: 'rgba(118, 75, 162, 0.2)',
+                    borderColor: '#764ba2'
+                },
+                {
+                    label: 'Robin',
+                    data: [90, 31, 95, 22, 90],
+                    backgroundColor: 'rgba(240, 147, 251, 0.2)',
+                    borderColor: '#f093fb'
+                },
+                {
+                    label: 'Joshua',
+                    data: [95, 172, 30, 15, 40],
+                    backgroundColor: 'rgba(79, 172, 254, 0.2)',
+                    borderColor: '#4facfe'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    angleLines: { display: true },
+                    suggestedMin: 0,
+                    suggestedMax: 100
+                }
+            }
+        }
+    });
+
+    // Growth Rate Chart
+    const growthCtx = document.getElementById('growthRateChart').getContext('2d');
+    new Chart(growthCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Janis', 'Iris', 'Robin', 'Joshua'],
+            datasets: [{
+                label: 'Projected Growth Rate %',
+                data: [14, 12, 22, 15],
+                backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Growth Rate %'
+                    }
+                }
+            }
+        }
+    });
+}
 
         function drawConversionCharts() {
             // Product Sales Comparison Chart

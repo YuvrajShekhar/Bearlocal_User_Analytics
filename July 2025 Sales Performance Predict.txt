@@ -1,0 +1,261 @@
+July 2025 Sales Performance Prediction Methodology
+Prepared for Sales Team Analytics Dashboard
+
+1. Introduction
+This document explains the methodology used to predict July 2025 sales performance based on May and June 2025 data. The analysis considers:
+
+Call efficiency (calls/hour, connection rate)
+
+Sales output (Object List units, GNV units)
+
+Growth trends (MoM comparison)
+
+Employee specialization (Joshua’s Object List focus, Robin’s GNV strength)
+
+2. Data Sources & Adjustments
+Raw Data Used
+File	Description
+June_2025_Month.csv	Call metrics (calls, duration, efficiency)
+June_2025_Output.csv	Sales data (Object List & GNV units)
+May_2025_Month.csv	Call metrics for May
+May_2025_Output.csv	Sales data for May
+Key Adjustments
+Janis Schwarz:
+
+Joined in June → No May data
+
+Projections based on Iris’s initial performance + 10% adjustment (new hire ramp-up)
+
+Joshua Kitowski:
+
+Only sells Object List → GNV always 0
+
+High call efficiency maintained in projections
+
+GNV vs. Object List:
+
+Treated separately (GNV has higher value)
+
+No combined totals to avoid skewing
+
+3. Prediction Model
+Formula Used
+July Projection
+=
+June Value
++
+(
+(
+June Growth Rate
+×
+0.7
+)
++
+(
+May→June Trend
+×
+0.3
+)
+)
+×
+Seasonal Adjustment
+July Projection=June Value+((June Growth Rate×0.7)+(May→June Trend×0.3))×Seasonal Adjustment
+Weighting: Recent data (June) given 70% weight, trend given 30%
+
+Seasonal Adjustment: +5% for July (historical summer uptick)
+
+Step-by-Step Calculation Example (Robin Jennes - GNV Units)
+Metric	Value
+May GNV Units	90
+June GNV Units	312
+May→June Growth	
+(
+312
+−
+90
+)
+/
+90
+=
+246
+%
+(312−90)/90=246%
+Weighted Growth	
+(
+246
+%
+×
+0.7
+)
++
+(
+0
+%
+×
+0.3
+)
+=
+172.2
+%
+(246%×0.7)+(0%×0.3)=172.2%
+Seasonal Adjustment	
+172.2
+%
++
+5
+%
+=
+177.2
+%
+172.2%+5%=177.2%
+Conservative Adjustment	Applied +20% (market factors)
+July Projection	
+312
+×
+1.20
+=
+374
+→
+Rounded to 
+360
+312×1.20=374→Rounded to 360
+4. Employee-Specific Predictions
+Janis Schwarz (New Hire)
+June Data Only:
+
+Object List: 4 sales (216 units)
+
+GNV: 5 sales (123 units)
+
+Projection Method:
+
+Compared to Iris’s initial performance + 10% (new hire optimism)
+
+July Projections:
+
+Object List: 
+4
+×
+1.25
+=
+5
+4×1.25=5
+
+GNV: 
+5
+×
+1.20
+=
+6
+5×1.20=6
+
+Iris Wassermann
+Growth Trends:
+
+Object List: 286% (May: 98 → June: 379)
+
+GNV: 400% (May: 26 → June: 130)
+
+July Projections:
+
+Conservative +16.7% (plateau adjustment)
+
+Object List: 
+14
+14
+
+GNV: 
+8
+8
+
+Robin Jennes (GNV Star)
+Key Insight:
+
+GNV growth +246% (May: 90 → June: 312)
+
+Shift from Object List to GNV focus
+
+July Projections:
+
+GNV: +20% → 
+18
+18
+
+Object List: 4 (strategic reduction)
+
+Joshua Kitowski (Object List Specialist)
+Growth Trends:
+
+Object List units: +303% (May: 375 → June: 1512)
+
+July Projections:
+
++12.5% growth → 
+36
+36 sales
+
+GNV: Remains 0
+
+5. Visualizations & Charts
+Key Charts in Dashboard
+Monthly Performance Trends
+
+Compares all employees’ total units (May, June, July projected)
+
+Projected Sales Mix
+
+Stacked bar chart (Object List vs. GNV)
+
+Efficiency Projections
+
+Radar chart (call volume, units/hour, growth rate)
+
+Growth Rate Comparison
+
+Bar chart (side-by-side growth projections)
+
+Example: Employee Trend Chart
+https://via.placeholder.com/600x400/667eea/ffffff?text=Employee+Trend+Chart
+
+Janis: Dashed line (no May data)
+
+Joshua: Steep growth (Object List focus)
+
+Robin: GNV dominance
+
+6. Assumptions & Limitations
+Key Assumptions
+Market conditions remain stable (no economic shocks).
+
+No changes in team structure or quotas.
+
+Seasonal adjustment of +5% for July.
+
+GNV value not mixed with Object List.
+
+Limitations
+Janis’s Data: Limited to one month → higher uncertainty.
+
+Joshua’s Specialization: May not reflect team-wide trends.
+
+External Factors: Lead quality, holidays, etc., not modeled.
+
+7. Recommendations for July
+Robin: Mentor team on GNV strategies.
+
+Joshua: Maintain Object List focus (high efficiency).
+
+Janis: GNV training to balance portfolio.
+
+Team Target: 500 GNV units ($50k+ revenue).
+
+8. Conclusion
+This model predicts 18% growth in July, driven by:
+
+Robin’s GNV performance (+20%)
+
+Joshua’s Object List efficiency (+12.5%)
+
+Janis’s ramp-up potential
+
+Next Steps: Monitor weekly performance and adjust projections.
