@@ -253,6 +253,7 @@
             <div class="tab" onclick="switchTab('long-calls')">Calls Over 1 Minute</div>
             <div class="tab" onclick="switchTab('conversion')">Conversion Rate Success</div>
             <div class="tab" onclick="switchTab('predictions')">July Performance Predictions</div>
+            <div class="tab" onclick="switchTab('trends')">May-July Trends</div>
         </div>
         
         <!-- All Calls Dashboard -->
@@ -1092,6 +1093,231 @@
             </div>
         </div>
 
+        <!-- New Trends Dashboard -->
+        <div id="trends" class="dashboard-view">
+        <div class="profitability-explanation">
+        <h3>📈 May-July 2025 Performance Trends</h3>
+        <p>This dashboard shows actual performance trends from May through July 2025 (first 14 days):</p>
+        <div class="formula">
+            Trend Analysis = Actual Performance vs Predictions vs Historical Growth
+        </div>
+        <ul style="margin: 10px 0;">
+            <li><strong>May 2025:</strong> 3 employees, strong baseline performance</li>
+            <li><strong>June 2025:</strong> 4 employees (Janis joined), team expansion</li>
+            <li><strong>July 2025:</strong> First 14 days actual vs predictions analysis</li>
+        </ul>
+    </div>
+    
+    <div class="summary-box">
+        <h2>3-Month Performance Summary</h2>
+        <div class="summary-stats">
+            <div class="summary-stat">
+                <div class="summary-stat-value">July Reality</div>
+                <div class="summary-stat-label">vs Predictions</div>
+            </div>
+            <div class="summary-stat">
+                <div class="summary-stat-value">351</div>
+                <div class="summary-stat-label">July Calls (14 days)</div>
+            </div>
+            <div class="summary-stat">
+                <div class="summary-stat-value">1,153</div>
+                <div class="summary-stat-label">July Total Units</div>
+            </div>
+            <div class="summary-stat">
+                <div class="summary-stat-value">17.6%</div>
+                <div class="summary-stat-label">Avg Connection Rate</div>
+            </div>
+            <div class="summary-stat">
+                <div class="summary-stat-value">Iris</div>
+                <div class="summary-stat-label">July Top Performer</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="performance-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>May Calls</th>
+                    <th>June Calls</th>
+                    <th>July Calls*</th>
+                    <th>May Units</th>
+                    <th>June Units</th>
+                    <th>July Units*</th>
+                    <th>Trend</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Janis Schwarz</strong></td>
+                    <td>-</td>
+                    <td>790</td>
+                    <td>145</td>
+                    <td>-</td>
+                    <td>221</td>
+                    <td>159</td>
+                    <td>🔄 Adjusting</td>
+                </tr>
+                <tr>
+                    <td><strong>Iris Wassermann</strong> 🏆</td>
+                    <td>305</td>
+                    <td>426</td>
+                    <td>98</td>
+                    <td>99</td>
+                    <td>386</td>
+                    <td class="positive">422</td>
+                    <td class="positive">📈 Growing</td>
+                </tr>
+                <tr>
+                    <td><strong>Robin Jennes</strong></td>
+                    <td>514</td>
+                    <td>675</td>
+                    <td>83</td>
+                    <td>706</td>
+                    <td>529</td>
+                    <td>159</td>
+                    <td>📉 Declining</td>
+                </tr>
+                <tr>
+                    <td><strong>Joshua Kitowski</strong></td>
+                    <td>519</td>
+                    <td>572</td>
+                    <td>25</td>
+                    <td>375</td>
+                    <td>1512</td>
+                    <td>413</td>
+                    <td>⚠️ Concerning</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="margin-top: 10px; font-size: 0.9em; color: #666;">*July data represents first 14 days only</p>
+    </div>
+
+    <div class="conversion-metrics">
+        <div class="conversion-metric">
+            <div class="conversion-metric-value">-83%</div>
+            <div class="conversion-metric-label">July Call Volume Drop</div>
+        </div>
+        <div class="conversion-metric">
+            <div class="conversion-metric-value">-75%</div>
+            <div class="conversion-metric-label">Connection Rate Decline</div>
+        </div>
+        <div class="conversion-metric">
+            <div class="conversion-metric-value">+9%</div>
+            <div class="conversion-metric-label">Iris Units Growth</div>
+        </div>
+        <div class="conversion-metric">
+            <div class="conversion-metric-value">-73%</div>
+            <div class="conversion-metric-label">Joshua Call Drop</div>
+        </div>
+    </div>
+
+    <div class="chart-grid">
+        <div class="chart-container">
+            <h2>Monthly Connected Calls Trend</h2>
+            <div class="chart-wrapper">
+                <canvas id="monthlyCallsChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-container">
+            <h2>Monthly Units Sold Trend</h2>
+            <div class="chart-wrapper">
+                <canvas id="monthlyUnitsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="chart-grid">
+        <div class="chart-container">
+            <h2>Connection Rate Evolution</h2>
+            <div class="chart-wrapper">
+                <canvas id="connectionRateChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-container">
+            <h2>Product Mix Evolution</h2>
+            <div class="chart-wrapper">
+                <canvas id="productMixChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="chart-grid">
+        <div class="chart-container">
+            <h2>Individual Performance Journey</h2>
+            <div class="chart-wrapper">
+                <canvas id="performanceJourneyChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-container">
+            <h2>Efficiency Trends</h2>
+            <div class="chart-wrapper">
+                <canvas id="efficiencyTrendsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="chart-grid">
+        <div class="chart-container">
+            <h2>Predictions vs Reality Analysis</h2>
+            <div class="chart-wrapper">
+                <canvas id="predictionAccuracyChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-container">
+            <h2>Call Volume vs Sales Success</h2>
+            <div class="chart-wrapper">
+                <canvas id="volumeVsSalesChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="profitability-explanation" style="margin-top: 30px;">
+        <h3>🔍 Key Insights from July Data (First 14 Days)</h3>
+        <h4>Major Findings:</h4>
+        <ol>
+            <li><strong>Connection Rate Crisis:</strong>
+                <ul>
+                    <li>All employees experienced 60-75% drop in connection rates</li>
+                    <li>Possible causes: market saturation, lead quality, or external factors</li>
+                    <li>Requires immediate investigation and strategy adjustment</li>
+                </ul>
+            </li>
+            <li><strong>Iris Wassermann - Star Performer:</strong>
+                <ul>
+                    <li>Despite lower calls, maintained unit growth (+9% vs June)</li>
+                    <li>Strong Object List focus (14 products vs 12 in June)</li>
+                    <li>Excellent conversion efficiency</li>
+                </ul>
+            </li>
+            <li><strong>Joshua Kitowski - Concerning Trend:</strong>
+                <ul>
+                    <li>Dramatic 96% drop in calls (572 → 25)</li>
+                    <li>Still maintaining Object List sales but at unsustainable call volume</li>
+                    <li>Needs immediate attention and support</li>
+                </ul>
+            </li>
+            <li><strong>Team Adaptation:</strong>
+                <ul>
+                    <li>Janis showing steady improvement since joining</li>
+                    <li>Robin's strategy shift continues but with lower overall volume</li>
+                    <li>Market conditions may require strategy pivots</li>
+                </ul>
+            </li>
+        </ol>
+        
+        <h4>Action Items:</h4>
+        <ul>
+            <li>Investigate connection rate drop - lead quality, market conditions, or process issues</li>
+            <li>Analyze Iris's approach for best practices to share with team</li>
+            <li>Provide immediate support to Joshua to understand call volume decline</li>
+            <li>Review predictions model to account for external market factors</li>
+            <li>Consider strategy adjustments for second half of July</li>
+        </ul>
+    </div>
+        </div>
+ 
     </div>
 
     <script>
@@ -1120,6 +1346,9 @@
             }
             else if (tabId === 'predictions') {
                 drawPredictionCharts();
+            }
+            else if (tabId === 'trends') {
+                drawTrendsCharts();
             }
             else {
                 drawLongCallsCharts();
@@ -1824,6 +2053,394 @@
         document.addEventListener('DOMContentLoaded', function() {
             drawAllCallsCharts();
         });
+
+        function drawTrendsCharts() {
+    // Monthly Connected Calls Trend
+    const monthlyCallsCtx = document.getElementById('monthlyCallsChart').getContext('2d');
+    new Chart(monthlyCallsCtx, {
+        type: 'line',
+        data: {
+            labels: ['May', 'June', 'July (14 days)'],
+            datasets: [
+                {
+                    label: 'Janis Schwarz',
+                    data: [null, 790, 145],
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                },
+                {
+                    label: 'Iris Wassermann',
+                    data: [305, 426, 98],
+                    borderColor: '#764ba2',
+                    backgroundColor: 'rgba(118, 75, 162, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                },
+                {
+                    label: 'Robin Jennes',
+                    data: [514, 675, 83],
+                    borderColor: '#f093fb',
+                    backgroundColor: 'rgba(240, 147, 251, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                },
+                {
+                    label: 'Joshua Kitowski',
+                    data: [519, 572, 25],
+                    borderColor: '#4facfe',
+                    backgroundColor: 'rgba(79, 172, 254, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + (context.raw !== null ? context.raw : 'N/A');
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Connected Calls'
+                    }
+                }
+            }
+        }
+    });
+
+    // Monthly Units Sold Trend
+    const monthlyUnitsCtx = document.getElementById('monthlyUnitsChart').getContext('2d');
+    new Chart(monthlyUnitsCtx, {
+        type: 'line',
+        data: {
+            labels: ['May', 'June', 'July (14 days)'],
+            datasets: [
+                {
+                    label: 'Janis Schwarz',
+                    data: [null, 221, 159],
+                    borderColor: '#667eea',
+                    tension: 0.3
+                },
+                {
+                    label: 'Iris Wassermann',
+                    data: [99, 386, 422],
+                    borderColor: '#764ba2',
+                    tension: 0.3
+                },
+                {
+                    label: 'Robin Jennes',
+                    data: [706, 529, 159],
+                    borderColor: '#f093fb',
+                    tension: 0.3
+                },
+                {
+                    label: 'Joshua Kitowski',
+                    data: [375, 1512, 413],
+                    borderColor: '#4facfe',
+                    tension: 0.3
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Total Units Sold'
+                    }
+                }
+            }
+        }
+    });
+
+    // Connection Rate Evolution
+    const connectionRateCtx = document.getElementById('connectionRateChart').getContext('2d');
+    new Chart(connectionRateCtx, {
+        type: 'line',
+        data: {
+            labels: ['May', 'June', 'July (14 days)'],
+            datasets: [
+                {
+                    label: 'Janis Schwarz',
+                    data: [null, 76.6, 20.9],
+                    borderColor: '#667eea',
+                    tension: 0.3
+                },
+                {
+                    label: 'Iris Wassermann',
+                    data: [77.6, 73.4, 23.6],
+                    borderColor: '#764ba2',
+                    tension: 0.3
+                },
+                {
+                    label: 'Robin Jennes',
+                    data: [76.8, 81.3, 20.1],
+                    borderColor: '#f093fb',
+                    tension: 0.3
+                },
+                {
+                    label: 'Joshua Kitowski',
+                    data: [74.9, 73.8, 5.9],
+                    borderColor: '#4facfe',
+                    tension: 0.3
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    title: {
+                        display: true,
+                        text: 'Connection Rate %'
+                    }
+                }
+            }
+        }
+    });
+
+    // Product Mix Evolution
+    const productMixCtx = document.getElementById('productMixChart').getContext('2d');
+    new Chart(productMixCtx, {
+        type: 'bar',
+        data: {
+            labels: ['May Total', 'June Total', 'July Total (14 days)'],
+            datasets: [
+                {
+                    label: 'Object List Products',
+                    data: [18, 51, 35],
+                    backgroundColor: '#667eea'
+                },
+                {
+                    label: 'GNV Products',
+                    data: [6, 22, 7],
+                    backgroundColor: '#764ba2'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: { stacked: true },
+                y: { stacked: true }
+            }
+        }
+    });
+
+    // Individual Performance Journey
+    const performanceJourneyCtx = document.getElementById('performanceJourneyChart').getContext('2d');
+    new Chart(performanceJourneyCtx, {
+        type: 'radar',
+        data: {
+            labels: ['Call Volume', 'Units Sold', 'Connection Rate', 'Object List', 'GNV Sales'],
+            datasets: [
+                {
+                    label: 'May Average',
+                    data: [446, 393, 76.4, 6, 2],
+                    borderColor: '#48bb78',
+                    backgroundColor: 'rgba(72, 187, 120, 0.1)',
+                    fill: true
+                },
+                {
+                    label: 'June Average',
+                    data: [616, 662, 76.3, 13, 6],
+                    borderColor: '#ed8936',
+                    backgroundColor: 'rgba(237, 137, 54, 0.1)',
+                    fill: true
+                },
+                {
+                    label: 'July Average (14 days)',
+                    data: [88, 288, 17.6, 9, 2],
+                    borderColor: '#e53e3e',
+                    backgroundColor: 'rgba(229, 62, 62, 0.1)',
+                    fill: true
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Efficiency Trends
+    const efficiencyTrendsCtx = document.getElementById('efficiencyTrendsChart').getContext('2d');
+    new Chart(efficiencyTrendsCtx, {
+        type: 'line',
+        data: {
+            labels: ['May', 'June', 'July (14 days)'],
+            datasets: [
+                {
+                    label: 'Units per Call Hour',
+                    data: [80.5, 28.4, 55.2],
+                    borderColor: '#667eea',
+                    tension: 0.3,
+                    fill: false
+                },
+                {
+                    label: 'Calls per Attempt %',
+                    data: [76.4, 76.3, 17.6],
+                    borderColor: '#764ba2',
+                    tension: 0.3,
+                    fill: false,
+                    yAxisID: 'y1'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    title: {
+                        display: true,
+                        text: 'Units per Call Hour'
+                    }
+                },
+                y1: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+                    title: {
+                        display: true,
+                        text: 'Connection Rate %'
+                    },
+                    grid: {
+                        drawOnChartArea: false
+                    }
+                }
+            }
+        }
+    });
+
+    // Predictions vs Reality Analysis
+    const predictionAccuracyCtx = document.getElementById('predictionAccuracyChart').getContext('2d');
+    new Chart(predictionAccuracyCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Janis', 'Iris', 'Robin', 'Joshua'],
+            datasets: [
+                {
+                    label: 'Predicted July Units',
+                    data: [396, 335, 375, 1180],
+                    backgroundColor: 'rgba(102, 126, 234, 0.5)',
+                    borderColor: '#667eea',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Actual July Units (14 days)',
+                    data: [159, 422, 159, 413],
+                    backgroundColor: 'rgba(118, 75, 162, 0.5)',
+                    borderColor: '#764ba2',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Total Units'
+                    }
+                }
+            }
+        }
+    });
+
+    // Call Volume vs Sales Success
+    const volumeVsSalesCtx = document.getElementById('volumeVsSalesChart').getContext('2d');
+    new Chart(volumeVsSalesCtx, {
+        type: 'scatter',
+        data: {
+            datasets: [
+                {
+                    label: 'May',
+                    data: [
+                        {x: 305, y: 99},
+                        {x: 514, y: 706},
+                        {x: 519, y: 375}
+                    ],
+                    backgroundColor: '#48bb78',
+                    borderColor: '#48bb78',
+                    pointRadius: 8
+                },
+                {
+                    label: 'June',
+                    data: [
+                        {x: 790, y: 221},
+                        {x: 426, y: 386},
+                        {x: 675, y: 529},
+                        {x: 572, y: 1512}
+                    ],
+                    backgroundColor: '#ed8936',
+                    borderColor: '#ed8936',
+                    pointRadius: 8
+                },
+                {
+                    label: 'July (14 days)',
+                    data: [
+                        {x: 145, y: 159},
+                        {x: 98, y: 422},
+                        {x: 83, y: 159},
+                        {x: 25, y: 413}
+                    ],
+                    backgroundColor: '#e53e3e',
+                    borderColor: '#e53e3e',
+                    pointRadius: 8
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Connected Calls'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Units Sold'
+                    }
+                }
+            }
+        }
+    });
+}
     </script>
 </body>
 </html>
