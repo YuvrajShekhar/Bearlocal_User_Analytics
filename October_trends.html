@@ -3,9 +3,1403 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sales Analytics Dashboard - October 2025</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .dashboard {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 2.2em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .date-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        
+        .alert-box {
+            background: #fff5f5;
+            border-left: 5px solid #fc8181;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+        }
+        
+        .alert-box.success {
+            background: #f0fff4;
+            border-left-color: #48bb78;
+        }
+        
+        .alert-box.warning {
+            background: #fffaf0;
+            border-left-color: #ed8936;
+        }
+        
+        .alert-box.critical {
+            background: #fff5f5;
+            border-left-color: #e53e3e;
+        }
+        
+        .alert-box h3 {
+            color: #c53030;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .alert-box.success h3 {
+            color: #22543d;
+        }
+        
+        .alert-box.warning h3 {
+            color: #744210;
+        }
+        
+        .alert-box.critical h3 {
+            color: #742a2a;
+        }
+        
+        .tab-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 0;
+        }
+        
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .tab:hover {
+            background: #e9ecef;
+        }
+        
+        .tab.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 2px solid white;
+            margin-bottom: -2px;
+            font-weight: 600;
+        }
+        
+        .dashboard-view {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .dashboard-view.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .summary-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .summary-box h2 {
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            font-weight: 300;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .summary-stat {
+            background: rgba(255,255,255,0.15);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .summary-stat-value {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .summary-stat-label {
+            font-size: 0.85em;
+            opacity: 0.95;
+        }
+        
+        .comparison-box {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .comparison-box h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .comparison-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .comparison-label {
+            color: #666;
+            font-size: 0.85em;
+            margin-bottom: 5px;
+        }
+        
+        .comparison-value {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .trend-positive {
+            color: #48bb78;
+        }
+        
+        .trend-negative {
+            color: #fc8181;
+        }
+        
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+        
+        .chart-container h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+        }
+        
+        .performance-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+        
+        .performance-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .performance-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 500;
+        }
+        
+        .performance-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .performance-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .performance-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .badge-gold {
+            background: #f6e05e;
+            color: #744210;
+        }
+        
+        .badge-silver {
+            background: #cbd5e0;
+            color: #2d3748;
+        }
+        
+        .badge-bronze {
+            background: #ed8936;
+            color: white;
+        }
+        
+        .insight-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .insight-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .insight-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .insight-card li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .insight-card li:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .metric-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-left: 4px solid #667eea;
+        }
+        
+        .metric-card-title {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .metric-card-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .metric-card-change {
+            font-size: 0.85em;
+            color: #666;
+        }
+        
+        .prediction-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .prediction-section h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+        
+        .formula-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        @media (max-width: 768px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+            .tab-container {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+            .dashboard {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    October Trend 
+    <div class="dashboard">
+        <div class="header">
+            <h1>📊 Sales Team Performance Analytics</h1>
+            <span class="date-badge">October 2025 Analysis & November Predictions</span>
+        </div>
+        
+        <!-- Alert for October performance -->
+        <div class="alert-box critical">
+            <h3>🚨 CRITICAL: Third Consecutive Crisis Month</h3>
+            <p><strong>October shows continued decline:</strong> Total connected calls decreased by 9.8% from 754 to 680. This represents only 27.6% of June's peak performance and confirms systemic technical issues requiring emergency intervention.</p>
+        </div>
+        
+        <!-- Tab Navigation -->
+        <div class="tab-container">
+            <div class="tab active" onclick="switchTab('overview')">Overview</div>
+            <div class="tab" onclick="switchTab('performance')">Individual Performance</div>
+            <div class="tab" onclick="switchTab('trends')">Trend Analysis</div>
+            <div class="tab" onclick="switchTab('predictions')">November Predictions</div>
+            <div class="tab" onclick="switchTab('crisis')">Crisis Management</div>
+            <div class="tab" onclick="window.open('August_trends.html', '_blank')">August Dashboard</div>
+            <div class="tab" onclick="window.open('September_trends.html', '_blank')">September Dashboard</div>
+        </div>
+        
+        <!-- Overview Dashboard -->
+        <div id="overview" class="dashboard-view active">
+            <div class="summary-box">
+                <h2>October 2025 Performance Summary</h2>
+                <div class="summary-grid">
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">680</div>
+                        <div class="summary-stat-label">Connected Calls</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">-9.8%</div>
+                        <div class="summary-stat-label">vs September</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">13</div>
+                        <div class="summary-stat-label">Products Sold</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">1,119</div>
+                        <div class="summary-stat-label">Total Units</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">29.7%</div>
+                        <div class="summary-stat-label">Connection Rate</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">Janis S.</div>
+                        <div class="summary-stat-label">Only Performer</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="comparison-box">
+                <h3>Month-over-Month Comparison</h3>
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <div class="comparison-label">September → October</div>
+                        <div class="comparison-value trend-negative">-9.8%</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">June Baseline</div>
+                        <div class="comparison-value">27.6%</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Units per Call</div>
+                        <div class="comparison-value trend-positive">1.65</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Team Efficiency</div>
+                        <div class="comparison-value trend-negative">-42%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h3>Monthly Call Volume Trend</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="monthlyVolumeChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Sales Performance by Employee</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="salesPerformanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="metric-cards">
+                <div class="metric-card">
+                    <div class="metric-card-title">Average Call Duration</div>
+                    <div class="metric-card-value">2m 22s</div>
+                    <div class="metric-card-change">↑ 4s from September</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Calls per Hour</div>
+                    <div class="metric-card-value">30.8</div>
+                    <div class="metric-card-change">↓ 10% from September</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Units per Call</div>
+                    <div class="metric-card-value">1.65</div>
+                    <div class="metric-card-change">↑ 24% from September</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Team Efficiency</div>
+                    <div class="metric-card-value">29.8%</div>
+                    <div class="metric-card-change">↓ 42% from September</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Individual Performance Dashboard -->
+        <div id="performance" class="dashboard-view">
+            <div class="summary-box">
+                <h2>Individual Performance Metrics - October 2025</h2>
+                <div class="summary-grid">
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">Janis</div>
+                        <div class="summary-stat-label">Only Active</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">Robin</div>
+                        <div class="summary-stat-label">-40.9%</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">Joshua</div>
+                        <div class="summary-stat-label">-27.6%</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">CRISIS</div>
+                        <div class="summary-stat-label">Status</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="performance-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Connected Calls</th>
+                            <th>Object List</th>
+                            <th>GNV</th>
+                            <th>Total Units</th>
+                            <th>Units per Call</th>
+                            <th>Trend</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Janis Schwarz</strong><span class="badge badge-gold">🥇 Only Performer</span></td>
+                            <td>465</td>
+                            <td>8 (366 units)</td>
+                            <td>19 (368 units)</td>
+                            <td>734</td>
+                            <td>1.58</td>
+                            <td class="trend-positive">↑ 13.4%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Robin Jennes</strong><span class="badge badge-silver">🥈 Declining</span></td>
+                            <td>152</td>
+                            <td>0 (0 units)</td>
+                            <td>3 (264 units)</td>
+                            <td>264</td>
+                            <td>1.74</td>
+                            <td class="trend-negative">↓ 40.9%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Joshua Kitowski</strong><span class="badge badge-bronze">🥉 Critical</span></td>
+                            <td>63</td>
+                            <td>0 (0 units)</td>
+                            <td>5 (121 units)</td>
+                            <td>121</td>
+                            <td>1.92</td>
+                            <td class="trend-negative">↓ 27.6%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h3>Call Volume Distribution</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="volumeDistributionChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Product Mix by Employee</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="productMixChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h3>Units per Call Comparison</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="unitsPerCallChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Performance vs September</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="performanceComparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Trend Analysis Dashboard -->
+        <div id="trends" class="dashboard-view">
+            <div class="insight-card">
+                <h3>📈 Critical Trend Insights</h3>
+                <ul>
+                    <li>🚨 THIRD CONSECUTIVE CRISIS MONTH - Connection rates at 29.7%</li>
+                    <li>🚨 Team operating at only 27.6% of June peak capacity</li>
+                    <li>📉 Joshua's performance collapsed to 63 calls (-27.6%)</li>
+                    <li>📊 Janis carrying 68.4% of team volume single-handedly</li>
+                    <li>⚠️ Object List sales nearly disappeared (only Janis active)</li>
+                </ul>
+            </div>
+            
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h3>Six-Month Performance Trend</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="sixMonthTrendChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Connection Rate Collapse</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="connectionCollapseChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h3>Individual Performance Trajectories</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="individualTrajectoryChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Product Strategy Evolution</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="productStrategyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="comparison-box">
+                <h3>Quarter Performance Analysis (July-October)</h3>
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <div class="comparison-label">Best Month</div>
+                        <div class="comparison-value">August 2025</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Worst Month</div>
+                        <div class="comparison-value">October 2025</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Average Calls/Month</div>
+                        <div class="comparison-value">834</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Total Units Sold</div>
+                        <div class="comparison-value">3,273</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- November Predictions Dashboard -->
+        <div id="predictions" class="dashboard-view">
+            <div class="prediction-section">
+                <h3>November 2025 Performance Predictions</h3>
+                <div class="formula-box">
+                    Emergency Recovery Model = (October Baseline × 0.2) + (Technical Resolution Impact × 0.8)
+                </div>
+                <p style="margin-top: 15px;">Based on three consecutive crisis months and assuming EMERGENCY technical intervention, we project November will achieve 35-45% of June's peak performance with aggressive recovery targets.</p>
+            </div>
+            
+            <div class="summary-box">
+                <h2>November 2025 Projections</h2>
+                <div class="summary-grid">
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">950</div>
+                        <div class="summary-stat-label">Projected Calls</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">+39.7%</div>
+                        <div class="summary-stat-label">Growth from October</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">18</div>
+                        <div class="summary-stat-label">Products Target</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">1,450</div>
+                        <div class="summary-stat-label">Units Target</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">45%</div>
+                        <div class="summary-stat-label">Connection Rate Target</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">38.6%</div>
+                        <div class="summary-stat-label">June Recovery</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="performance-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Projected Calls</th>
+                            <th>Object List Target</th>
+                            <th>GNV Target</th>
+                            <th>Total Units</th>
+                            <th>Growth %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Janis Schwarz</strong></td>
+                            <td>550 (+18.3%)</td>
+                            <td>10 (450 units)</td>
+                            <td>20 (400 units)</td>
+                            <td>850</td>
+                            <td class="trend-positive">+15.8%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Robin Jennes</strong></td>
+                            <td>250 (+64.5%)</td>
+                            <td>2 (80 units)</td>
+                            <td>8 (320 units)</td>
+                            <td>400</td>
+                            <td class="trend-positive">+51.5%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Joshua Kitowski</strong></td>
+                            <td>150 (+138.1%)</td>
+                            <td>3 (120 units)</td>
+                            <td>6 (140 units)</td>
+                            <td>260</td>
+                            <td class="trend-positive">+114.9%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h3>Projected November Performance</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="novemberProjectionChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Emergency Recovery Trajectory</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="recoveryTrajectoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert-box critical">
+                <h3>🚨 EMERGENCY: Critical Risk Factors for November</h3>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>SYSTEMIC TECHNICAL FAILURE confirmed by 3-month pattern</li>
+                    <li>Team morale at critical levels - risk of talent attrition</li>
+                    <li>Market confidence completely eroded</li>
+                    <li>Business viability at risk if not resolved immediately</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Crisis Management Dashboard -->
+        <div id="crisis" class="dashboard-view">
+            <div class="summary-box">
+                <h2>October 2025 Crisis Severity Assessment</h2>
+                <div class="summary-grid">
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">-9.8%</div>
+                        <div class="summary-stat-label">October Drop</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">29.7%</div>
+                        <div class="summary-stat-label">Connection Rate</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">27.6%</div>
+                        <div class="summary-stat-label">June Baseline %</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-stat-value">EMERGENCY</div>
+                        <div class="summary-stat-label">Status</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="insight-card">
+                <h3>🔍 Crisis Severity Analysis</h3>
+                <ul>
+                    <li><strong>Pattern Confirmed:</strong> Third consecutive crisis month establishes systemic failure</li>
+                    <li><strong>Most Critical:</strong> Joshua operating at 13% of August capacity</li>
+                    <li><strong>Single Point Failure:</strong> Janis carrying 68.4% of team volume</li>
+                    <li><strong>Business Impact:</strong> Revenue at 27.6% of peak capacity</li>
+                    <li><strong>Urgency Level:</strong> EMERGENCY - requires executive intervention</li>
+                </ul>
+            </div>
+            
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h3>Triple Crisis Timeline (July, Sept, Oct)</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="tripleCrisisChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Individual Performance Collapse</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="performanceCollapseChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="comparison-box">
+                <h3>Crisis Impact Analysis</h3>
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <div class="comparison-label">Joshua - Peak to Current</div>
+                        <div class="comparison-value trend-negative">-89.0%</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Robin - Peak to Current</div>
+                        <div class="comparison-value trend-negative">-77.5%</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Janis - Peak to Current</div>
+                        <div class="comparison-value trend-negative">-41.1%</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Team Average Drop</div>
+                        <div class="comparison-value trend-negative">-72.4%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h3>Monthly Efficiency Collapse</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="efficiencyCollapseChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Call Volume vs Units Efficiency</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="volumeEfficiencyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="prediction-section">
+                <h3>🚨 EMERGENCY ACTION PLAN</h3>
+                <ol style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>IMMEDIATE:</strong> Complete technical system replacement (not repair)</li>
+                    <li><strong>URGENT:</strong> Executive leadership assumes direct control of operations</li>
+                    <li><strong>CRITICAL:</strong> Team morale and retention emergency measures</li>
+                    <li><strong>ESSENTIAL:</strong> External technical audit and vendor assessment</li>
+                    <li><strong>PRIORITY:</strong> Business continuity planning for extended outage</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Tab switching function
+        function switchTab(tabId) {
+            // Hide all views
+            document.querySelectorAll('.dashboard-view').forEach(view => {
+                view.classList.remove('active');
+            });
+            
+            // Deactivate all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Activate selected tab and view
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+            
+            // Initialize charts for the active tab
+            initializeCharts(tabId);
+        }
+        
+        // Initialize charts based on active tab
+        function initializeCharts(tabId) {
+            // Destroy all existing charts first
+            Chart.helpers.each(Chart.instances, function(instance) {
+                instance.destroy();
+            });
+            
+            switch(tabId) {
+                case 'overview':
+                    drawOverviewCharts();
+                    break;
+                case 'performance':
+                    drawPerformanceCharts();
+                    break;
+                case 'trends':
+                    drawTrendCharts();
+                    break;
+                case 'predictions':
+                    drawPredictionCharts();
+                    break;
+                case 'crisis':
+                    drawCrisisCharts();
+                    break;
+            }
+        }
+        
+        // Overview Charts
+        function drawOverviewCharts() {
+            // Monthly Volume Chart
+            const volumeCtx = document.getElementById('monthlyVolumeChart').getContext('2d');
+            new Chart(volumeCtx, {
+                type: 'line',
+                data: {
+                    labels: ['May', 'June', 'July', 'August', 'September', 'October'],
+                    datasets: [{
+                        label: 'Connected Calls',
+                        data: [1755, 2463, 351, 1552, 754, 680],
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            
+            // Sales Performance Chart
+            const salesCtx = document.getElementById('salesPerformanceChart').getContext('2d');
+            new Chart(salesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Janis', 'Robin', 'Joshua'],
+                    datasets: [
+                        {
+                            label: 'Object List Units',
+                            data: [366, 0, 0],
+                            backgroundColor: '#667eea'
+                        },
+                        {
+                            label: 'GNV Units',
+                            data: [368, 264, 121],
+                            backgroundColor: '#764ba2'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            stacked: true
+                        },
+                        y: {
+                            stacked: true
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Performance Charts
+        function drawPerformanceCharts() {
+            // Volume Distribution
+            const volumeCtx = document.getElementById('volumeDistributionChart').getContext('2d');
+            new Chart(volumeCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Janis', 'Robin', 'Joshua'],
+                    datasets: [{
+                        data: [465, 152, 63],
+                        backgroundColor: ['#667eea', '#764ba2', '#f093fb']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            // Product Mix
+            const mixCtx = document.getElementById('productMixChart').getContext('2d');
+            new Chart(mixCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Janis', 'Robin', 'Joshua'],
+                    datasets: [
+                        {
+                            label: 'Object List',
+                            data: [8, 0, 0],
+                            backgroundColor: '#667eea'
+                        },
+                        {
+                            label: 'GNV',
+                            data: [19, 3, 5],
+                            backgroundColor: '#764ba2'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            // Units per Call
+            const unitsCtx = document.getElementById('unitsPerCallChart').getContext('2d');
+            new Chart(unitsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Janis', 'Robin', 'Joshua'],
+                    datasets: [{
+                        label: 'Units per Call',
+                        data: [1.58, 1.74, 1.92],
+                        backgroundColor: ['#667eea', '#764ba2', '#f093fb']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            // Performance Comparison
+            const comparisonCtx = document.getElementById('performanceComparisonChart').getContext('2d');
+            new Chart(comparisonCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Janis', 'Robin', 'Joshua'],
+                    datasets: [
+                        {
+                            label: 'September Calls',
+                            data: [410, 257, 87],
+                            backgroundColor: '#667eea'
+                        },
+                        {
+                            label: 'October Calls',
+                            data: [465, 152, 63],
+                            backgroundColor: '#764ba2'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+        
+        // Trend Charts
+        function drawTrendCharts() {
+            // Six Month Trend
+            const trendCtx = document.getElementById('sixMonthTrendChart').getContext('2d');
+            new Chart(trendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['May', 'June', 'July', 'August', 'September', 'October'],
+                    datasets: [
+                        {
+                            label: 'Total Connected Calls',
+                            data: [1755, 2463, 351, 1552, 754, 680],
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            // Connection Collapse
+            const connectionCtx = document.getElementById('connectionCollapseChart').getContext('2d');
+            new Chart(connectionCtx, {
+                type: 'line',
+                data: {
+                    labels: ['May', 'June', 'July', 'August', 'September', 'October'],
+                    datasets: [{
+                        label: 'Connection Rate %',
+                        data: [71, 76.3, 25.4, 68.2, 33.2, 29.7],
+                        borderColor: '#fc8181',
+                        backgroundColor: 'rgba(252, 129, 129, 0.1)',
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+            
+            // Individual Trajectory
+            const trajectoryCtx = document.getElementById('individualTrajectoryChart').getContext('2d');
+            new Chart(trajectoryCtx, {
+                type: 'line',
+                data: {
+                    labels: ['May', 'June', 'July', 'August', 'September', 'October'],
+                    datasets: [
+                        {
+                            label: 'Janis',
+                            data: [0, 790, 145, 412, 410, 465],
+                            borderColor: '#667eea',
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Robin',
+                            data: [520, 675, 83, 378, 257, 152],
+                            borderColor: '#764ba2',
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Joshua',
+                            data: [375, 572, 25, 485, 87, 63],
+                            borderColor: '#f093fb',
+                            tension: 0.3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            // Product Strategy
+            const productCtx = document.getElementById('productStrategyChart').getContext('2d');
+            new Chart(productCtx, {
+                type: 'line',
+                data: {
+                    labels: ['May', 'June', 'July', 'August', 'September', 'October'],
+                    datasets: [
+                        {
+                            label: 'Object List Products',
+                            data: [18, 35, 35, 36, 4, 8],
+                            borderColor: '#667eea',
+                            tension: 0.3
+                        },
+                        {
+                            label: 'GNV Products',
+                            data: [0, 0, 0, 15, 28, 27],
+                            borderColor: '#764ba2',
+                            tension: 0.3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+        
+        // Prediction Charts
+        function drawPredictionCharts() {
+            // November Projection
+            const projectionCtx = document.getElementById('novemberProjectionChart').getContext('2d');
+            new Chart(projectionCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Janis', 'Robin', 'Joshua'],
+                    datasets: [
+                        {
+                            label: 'October Actual',
+                            data: [734, 264, 121],
+                            backgroundColor: '#667eea'
+                        },
+                        {
+                            label: 'November Projected',
+                            data: [850, 400, 260],
+                            backgroundColor: '#764ba2'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            // Recovery Trajectory
+            const recoveryCtx = document.getElementById('recoveryTrajectoryChart').getContext('2d');
+            new Chart(recoveryCtx, {
+                type: 'line',
+                data: {
+                    labels: ['June', 'July', 'August', 'September', 'October', 'Nov (Proj)', 'Dec (Est)'],
+                    datasets: [{
+                        label: 'Connected Calls',
+                        data: [2463, 351, 1552, 754, 680, 950, 1200],
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        borderDash: [0, 0, 0, 0, 0, 5, 5],
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+        
+        // Crisis Charts
+        function drawCrisisCharts() {
+            // Triple Crisis
+            const crisisCtx = document.getElementById('tripleCrisisChart').getContext('2d');
+            new Chart(crisisCtx, {
+                type: 'line',
+                data: {
+                    labels: ['May', 'June', 'July', 'August', 'September', 'October'],
+                    datasets: [{
+                        label: 'Monthly Performance',
+                        data: [1755, 2463, 351, 1552, 754, 680],
+                        borderColor: '#fc8181',
+                        backgroundColor: 'rgba(252, 129, 129, 0.1)',
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            // Performance Collapse
+            const collapseCtx = document.getElementById('performanceCollapseChart').getContext('2d');
+            new Chart(collapseCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Janis', 'Robin', 'Joshua'],
+                    datasets: [{
+                        label: 'Performance Drop % (Peak→Current)',
+                        data: [-41.1, -77.5, -89.0],
+                        backgroundColor: ['#667eea', '#764ba2', '#f093fb']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            // Efficiency Collapse
+            const efficiencyCtx = document.getElementById('efficiencyCollapseChart').getContext('2d');
+            new Chart(efficiencyCtx, {
+                type: 'line',
+                data: {
+                    labels: ['May', 'June', 'July', 'August', 'September', 'October'],
+                    datasets: [{
+                        label: 'Team Efficiency %',
+                        data: [65, 72, 88, 78, 51, 30],
+                        borderColor: '#fc8181',
+                        backgroundColor: 'rgba(252, 129, 129, 0.1)',
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+            
+            // Volume vs Efficiency
+            const volumeEffCtx = document.getElementById('volumeEfficiencyChart').getContext('2d');
+            new Chart(volumeEffCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['May', 'June', 'July', 'August', 'September', 'October'],
+                    datasets: [
+                        {
+                            label: 'Connected Calls',
+                            data: [1755, 2463, 351, 1552, 754, 680],
+                            backgroundColor: '#667eea',
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Units per Call',
+                            data: [0.67, 0.58, 1.28, 1.17, 1.33, 1.65],
+                            backgroundColor: '#764ba2',
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Connected Calls'
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Units per Call'
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            drawOverviewCharts();
+        });
+    </script>
 </body>
 </html>
